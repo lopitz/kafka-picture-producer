@@ -3,7 +3,7 @@ kafka-picture-producer
 
 Simple sample Kafka producer that reads PNG files from a given directory and stores them into a Kafka topic. 
 The Kafka magic is done inside [kafka.KafkaImageProducer](src/main/java/imageproducer/kafka/KafkaImageProducer.java#L108).
-Start the [kafka-picture-consumer](../kafka-picture-consumer), the kafka-picture-producer, lay back and enjoy your movie. :smirk:
+Start the [kafka-picture-consumer](../../../kafka-picture-consumer), the kafka-picture-producer, lay back and enjoy your movie. :smirk:
 
 Usage
 -----
