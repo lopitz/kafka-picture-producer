@@ -16,7 +16,7 @@ apply plugin: 'spring-boot'
 compileJava.dependsOn(processResources)
 
 jar {
-    baseName = 'mobile-tracking-counter-client'
+    baseName = 'kafka-picture-producer'
     version = '0.1.0'
 }
 

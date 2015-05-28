@@ -49,7 +49,7 @@ public class Application {
         application.startReport();
         Path path = Paths.get(application.basePath);
         logger.info("Path to be scanned for images {}", path.toAbsolutePath().toString());
-        Files.list(path).filter(element -> element.toString().endsWith("png")).forEach(element -> {
+        Files.list(path).filter(element -> element.toString().toLowerCase().endsWith("png")).forEach(element -> {
             try {
                 application.handler.imageCreatedWithNameAndData(element.getFileName().toString(),
                         Files.readAllBytes(element));
