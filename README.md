@@ -5,12 +5,16 @@ Simple sample Kafka producer that reads PNG files from a given directory and sto
 The Kafka magic is done inside [kafka.KafkaImageProducer](src/main/java/imageproducer/kafka/KafkaImageProducer.java#L108).
 Start the [kafka-picture-consumer](../../../kafka-picture-consumer), the kafka-picture-producer, lay back and enjoy your movie. :smirk:
 
+Just as a side note, this project uses [Spring Boot](http://projects.spring.io/spring-boot/) as application framework.
+
 Usage
 -----
 
 In the easiest way you simply run
 
     java -jar kafka-picture-producer-0.1.0.jar 
+
+(make sure you went to build/libs folder before the execution)
 
 but there are also some command line arguments
 
@@ -26,3 +30,12 @@ but there are also some command line arguments
 | --kafka.replication.count | numbers of brokers this topic is replicated to  | 1              |
  
 These command lines could also be set in the [application.properties](src/main/resources/application.properties)
+
+Build
+-----
+
+This project uses [Gradle](https://gradle.org/) for building the application. Simply run
+
+    ./gradlew assemble
+
+to build the executable jar file. You then will find it under build/libs
