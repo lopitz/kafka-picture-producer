@@ -5,7 +5,7 @@ Simple sample [Kafka](https://kafka.apache.org) producer that reads PNG files fr
 The Kafka magic is done inside [kafka.KafkaImageProducer](src/main/java/imageproducer/kafka/KafkaImageProducer.java#L108).
 Together with [kafka-picture-consumer](../../../kafka-picture-consumer) it demonstrates the different working modes Queuing and Publish/Subscribe of Kafka.
 
-Start the [kafka-picture-consumer](../../../kafka-picture-consumer), the kafka-picture-producer, lay back and enjoy your movie. :smirk:
+Start this application and the [kafka-picture-consumer](../../../kafka-picture-consumer), the kafka-picture-producer, lay back and enjoy your movie. :smirk:
 
 Preconditions
 -------------
@@ -47,7 +47,7 @@ This project uses [Gradle](https://gradle.org/) for building the application. Si
 
     ./gradlew assemble
 
-to build the executable jar file. You then will find it under build/libs
+to build the executable jar file. You then will find it under build/libs.
 
 Test setup
 ----------
@@ -62,3 +62,34 @@ From there start the following commands (please wait a bit after each command to
     bin/kafka-server-start.sh config/server.properties &
     
 As the kafka-picture-producer automatically creates the needed topic, you're done. Now you can start the producer as described in the [Usage section](#usage).
+
+Demo
+----
+The demo is meant to show what [Apache Kafka](https://kafka.apache.org) means with _log_ (so, ordered set of messages, stored regardless whether or how often they are consumed) explain the differences between Queuing and Publish/Subscribe modes of [Apache Kafka](https://kafka.apache.org). Start the [test setup](#test-setup).
+
+Now start two consumer instances of the [kafka-image-consumer](../../../kafka-picture-consumer/blob/master/README.md#usage) with the same consumer id so e.g.
+
+    java -Djava.awt.headless=false -jar kafka-picture-consumer-0.1.0.jar --kafka.group.id=1 &
+    java -Djava.awt.headless=false -jar kafka-picture-consumer-0.1.0.jar --kafka.group.id=1 &
+    
+and another one with a different consumer id, like so:
+
+    java -Djava.awt.headless=false -jar kafka-picture-consumer-0.1.0.jar --kafka.group.id=2 &
+
+Arrange the windows so you can see them all.
+
+Now start the [producer](#usage) and observe what happens on the consumer windows. 
+
+_Please pay attention that the messages (the images in this demo) are only stored for 3 minutes so hurry_ :smirk:
+
+So what will happen? You'll see the movie running (too fast for sure :smirk:) on two consumer windows, one will stay blank. As the consumer group id is displayed on the title of the windows you'll find that the consumer that stays blank has the same consumer id as another consumer. This is the Kafka Queuing mode with the edge case that there are less partitions than consumers.
+
+This demo also shows the Publish/Subscribe mode. You'll find that consumers with different consumer group ids will pull the messages, so this works somehow like broadcasting.
+
+What else do you see? The single movie frames are shown in the correct order. So first message that came in will be consumed first.
+
+Now start an additional consumer (I hope you do so within the 3 minutes lifetime of the messages), like so
+
+    java -Djava.awt.headless=false -jar kafka-picture-consumer-0.1.0.jar --kafka.group.id=3 &
+    
+You'll find the movie starts playing. This is so, because Kafka keeps the messages (until the configured timeout) regardless of how often the messages where consumed.
