@@ -1,7 +1,7 @@
 kafka-picture-producer
 ======================
 
-Simple sample [Kafka](https://kafka.apache.org) producer that reads PNG files from a given directory and stores them into a Kafka topic. 
+Simple sample [Kafka](https://kafka.apache.org) producer that reads image files from a given directory and stores them into a Kafka topic. 
 The Kafka magic is done inside [kafka.KafkaImageProducer](src/main/java/imageproducer/kafka/KafkaImageProducer.java#L108).
 Together with [kafka-picture-consumer](../../../kafka-picture-consumer) it demonstrates the different working modes Queuing and Publish/Subscribe of Kafka.
 
@@ -25,15 +25,16 @@ but there are also some command line arguments
 
     java -jar kafka-picture-producer-0.1.0.jar [--imagePath] [--zookeeper.connect] [--kafka.topic] [--kafka.broker.host] [--kafka.partition.count] [--kafka.replication.count]
 
-| argument name             | argument value                                  | default        |
-| ------------------------- | ----------------------------------------------- | -------------- |
-| --imagePath               | path to be used to read images (png) from       | .              |
-| --zookeeper.connect       | zookeeper host (needed for topic creation only) | localhost:2181 |
-| --kafka.topic             | topic the images are published to               | images         |
-| --kafka.broker.host       | a Kafka broker to connect initially             | localhost:9092 |
-| --kafka.partition.count   | numbers of partitions for the topic             | 1              |
-| --kafka.replication.count | numbers of brokers this topic is replicated to  | 1              |
- 
+| argument name             | argument value                                  | default                 |
+| ------------------------- | ----------------------------------------------- | ----------------------- |
+| --zookeeper.connect       | zookeeper host (needed for topic creation only) | localhost:2181          |
+| --kafka.topic             | topic the images are published to               | images                  |
+| --kafka.broker.host       | a Kafka broker to connect initially             | localhost:9092          |
+| --kafka.partition.count   | numbers of partitions for the topic             | 1                       |
+| --kafka.replication.count | numbers of brokers this topic is replicated to  | 1                       |
+| --imageProducer           | name of the image producer to use, <br>possible values are<ul><li>fileSystemImageProducer (to read images from file system)</li><li>memoryImageProducer (for creating images on the fly --imagePath ignored)</li></ul> | fileSystemImageProducer |
+| --imagePath               | path to be used to read images (png) from, used by fileSystemImageProducer  | .
+
 These command lines could also be set in the [application.properties](src/main/resources/application.properties)
 
 About the application
