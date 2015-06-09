@@ -1,7 +1,9 @@
 package imageproducer;
 
+import imageproducer.imageproducer.Image;
+
 @FunctionalInterface
 public interface ImageHandler {
 
-    void imageCreatedWithNameAndData(String name, byte[] rawData);
+    void imageCreatedWithNameAndData(Image image);
 }
