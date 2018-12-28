@@ -23,11 +23,11 @@ In the easiest way you simply run
 
 but there are also some command line arguments
 
-    java -jar kafka-picture-producer-0.1.0.jar [--imagePath] [--zookeeper.connect] [--kafka.topic] [--kafka.broker.host] [--kafka.partition.count] [--kafka.replication.count]
+    java -jar kafka-picture-producer-0.1.0.jar [--imagePath] [--zookeeper.broker.host] [--kafka.topic] [--kafka.broker.host] [--kafka.partition.count] [--kafka.replication.count]
 
 | argument name             | argument value                                  | default                 |
 | ------------------------- | ----------------------------------------------- | ----------------------- |
-| --zookeeper.connect       | zookeeper host (needed for topic creation only) | localhost:2181          |
+| --zookeeper.broker.host   | zookeeper host (needed for topic creation only) | localhost:2181          |
 | --kafka.topic             | topic the images are published to               | images                  |
 | --kafka.broker.host       | a Kafka broker to connect initially             | localhost:9092          |
 | --kafka.partition.count   | numbers of partitions for the topic             | 1                       |
