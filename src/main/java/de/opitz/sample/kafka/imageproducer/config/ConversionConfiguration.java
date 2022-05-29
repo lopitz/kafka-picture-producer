@@ -1,4 +1,6 @@
-package imageproducer.config;
+package de.opitz.sample.kafka.imageproducer.config;
+
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -9,9 +11,7 @@ import org.springframework.context.support.ConversionServiceFactoryBean;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 
-import com.google.common.collect.Sets;
-
-import imageproducer.imageproducer.ImageProducer;
+import de.opitz.sample.kafka.imageproducer.producers.ImageProducer;
 
 @Configuration
 public class ConversionConfiguration {
@@ -19,14 +19,13 @@ public class ConversionConfiguration {
     @Bean
     @Inject
     public ConversionService conversionService(ApplicationContext applicationContext) {
-        ConversionServiceFactoryBean bean = new ConversionServiceFactoryBean();
-        bean.setConverters(Sets.newHashSet(new StringToImageProducerConverter(applicationContext)));
+        var bean = new ConversionServiceFactoryBean();
+        bean.setConverters(Set.of(new StringToImageProducerConverter(applicationContext)));
         bean.afterPropertiesSet();
         return bean.getObject();
     }
 
-    private class StringToImageProducerConverter implements Converter<String, ImageProducer> {
-
+    private static class StringToImageProducerConverter implements Converter<String, ImageProducer> {
 
         private final ApplicationContext applicationContext;
 
